@@ -3,16 +3,20 @@ import "./styles.css";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [addItem, setAddItem] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const addItem = e.target["item"].value;
     setItems((prev) => [...prev, addItem]);
     e.target.reset();
   };
 
-  const inputHandler = (e) => {
-    setAddItem(e.target.value);
+  const removeHandler = (item) => {
+    console.log(item);
+    const removeItem = item;
+    const newItems = items.filter((item) => removeItem !== item);
+    console.log(newItems);
+    setItems(newItems);
   };
 
   return (
@@ -26,7 +30,6 @@ function App() {
             name="item"
             placeholder="Add a new item"
             required
-            onChange={inputHandler}
           />
           <button>Add</button>
         </form>
@@ -34,7 +37,9 @@ function App() {
           {items.map((el, idx) => (
             <li key={idx}>
               {el}
-              <button className="delete">x</button>
+              <button className="delete" onClick={() => removeHandler(el)}>
+                x
+              </button>
             </li>
           ))}
         </ul>
